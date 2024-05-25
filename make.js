@@ -69,7 +69,7 @@ function processLy(lyFile,callback) {
 var gsCmds = ['gs','gswin64c','gswin32c'],
     gsI = 0;
 function ps2pdf(psFiles,width,height,outputName) {
-    outputName = outputName || '!full.pdf';
+    outputName = outputName || 'BOOK.pdf';
     width *= 72;
     height*= 72;
     if(typeof(psFiles)=='string') psFiles = [psFiles];
