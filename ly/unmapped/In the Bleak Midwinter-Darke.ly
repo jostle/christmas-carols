@@ -32,7 +32,7 @@
   oddHeaderMarkup = \markup\fill-line{
      \override #'(font-name . "Garamond Premier Pro")\abs-fontsize #8.5
      \combine 
-        \fill-line{"" \on-the-fly #print-page-number-check-first
+        \fill-line{"" \if \should-print-page-number
         \oldStylePageNum""
         }
         \fill-line{\headerLine}
@@ -40,7 +40,7 @@
   evenHeaderMarkup = \markup {
      \override #'(font-name . "Garamond Premier Pro")\abs-fontsize #8.5
      \combine
-        \on-the-fly #print-page-number-check-first
+        \if \should-print-page-number
         \oldStylePageNum""
         \fill-line{\headerLine}
   }
@@ -127,10 +127,6 @@ sopMusic = \relative c'' {
   g2^>( d) |
   d1~ |
   d2. b4 |
-  <b d,>4\( <g e>_\markup\italic"accomp." <d' fis, c> <b fis d> |
-  <g b,> <e c> <fis a,>_\> <d c> |
-  <g e c>1~ |
-  <g d b>1*2/4\) s2\! \bar "|."
 }
 sopWords = \lyricmode {
   
@@ -354,15 +350,16 @@ bassMusic = \relative c {
   d1 |
   d~ |
   d2( e4) fis |
-  << g1 \\
-    {\oneVoice<d g,>1~_\markup\italic"accomp." | q | <g g,>~ | q} >> \bar "|."
+  g1
 }
 bassWords = \lyricmode {
 
 }
 
 pianoRH = \relative c'' {
-  \set Staff.midiInstrument = "piano"
+  \set Staff.midiInstrument = "acoustic grand"
+  \set Staff.midiMinimumVolume = #0.5
+  \set Staff.midiMaximumVolume = #0.5
   <b d,>4\(_\p <g e> <fis d'> <b fis d> |
   <g b,> <e c> <fis a,> <d c>\) |
   << {<g b,>\( <e c> <fis a,> <d c> |
@@ -393,10 +390,20 @@ pianoRH = \relative c'' {
       s1 } \\
      {\voiceTwo s1 d1} >> |
   <g b,>1 \bar "||"
+
+  \repeat unfold 17 { r1 }
+  \repeat unfold 18 { r1 }
+  
+  <b d,>4\( <g e>_\markup\italic"accomp." <d' fis, c> <b fis d> |
+  <g b,> <e c> <fis a,>_\> <d c> |
+  <g e c>1~ |
+  <g d b>1*2/4\) s2\! \bar "|."
 }
 
 pianoLH = \relative c' {
-  \set Staff.midiInstrument = "piano"
+  \set Staff.midiInstrument = "acoustic grand"
+  \set Staff.midiMinimumVolume = #0.5
+  \set Staff.midiMaximumVolume = #0.5
   << {b4 c a s | s1} \\
      {<d, g,>1~ | q} >> |
   << {d1~ | d2 s2 | g2. s4 } \\
@@ -417,6 +424,10 @@ pianoLH = \relative c' {
   d,1 |
   << {d2\( e4 fis\)} \\ {d1} >> |
   <g d g,>1 \bar "||"
+  
+  \repeat unfold 17 { r1 }
+  \repeat unfold 18 { r1 }
+  \oneVoice<d g,>1~ | q | <g g,>~ | q
 }
 
 \score {
@@ -460,7 +471,7 @@ pianoLH = \relative c' {
   }
   \midi {
     \tempo 4 = 90
-    \set Staff.midiInstrument = "flute"
+    \set Staff.midiInstrument = "piccolo"
   
     \context {
       \Voice
